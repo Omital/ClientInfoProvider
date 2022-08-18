@@ -259,6 +259,10 @@
   <ItemGroup>
     <Compile Include="EntityFramework\RadinDbContext.cs" />
     <Compile Include="EntityFramework\Repositories\RadinRepositoryBase.cs" />
+    <Compile Include="Migrations\202208180730380_addBaseData.cs" />
+    <Compile Include="Migrations\202208180730380_addBaseData.designer.cs">
+      <DependentUpon>202208180730380_addBaseData.cs</DependentUpon>
+    </Compile>
     <Compile Include="RadinDataModule.cs" />
     <Compile Include="Migrations\201809270654064_InitialMigrations.cs" />
     <Compile Include="Migrations\201809270654064_InitialMigrations.Designer.cs">
@@ -400,6 +404,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202206221055273_Upgrade_To_ABP_7.3.resx">
       <DependentUpon>202206221055273_Upgrade_To_ABP_7.3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208180730380_addBaseData.resx">
+      <DependentUpon>202208180730380_addBaseData.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,8 +1,7 @@
-﻿using System.Threading.Tasks;
-using Abp.Auditing;
-using Abp.AutoMapper;
+﻿using Abp.Auditing;
 using Abp.ObjectMapping;
 using Radin.Sessions.Dto;
+using System.Threading.Tasks;
 
 namespace Radin.Sessions
 {

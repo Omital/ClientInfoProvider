@@ -1,16 +1,19 @@
-﻿using System.Data.Common;
-using System.Data.Entity;
-using Abp.DynamicEntityProperties;
+﻿using Abp.DynamicEntityProperties;
 using Abp.Zero.EntityFramework;
 using Radin.Authorization.Roles;
 using Radin.Authorization.Users;
 using Radin.MultiTenancy;
+using Radin.Test;
+using System.Data.Common;
+using System.Data.Entity;
 
 namespace Radin.EntityFramework
 {
     public class RadinDbContext : AbpZeroDbContext<Tenant, Role, User>
     {
         //TODO: Define an IDbSet for your Entities...
+
+        public virtual IDbSet<BaseData> BaseDatas { get; set; }
 
         /* NOTE: 
          *   Setting "Default" to base class helps us when working migration commands on Package Manager Console.

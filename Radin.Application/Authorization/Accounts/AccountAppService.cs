@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using Abp.Configuration;
 using Abp.Zero.Configuration;
 using Radin.Authorization.Accounts.Dto;
 using Radin.Authorization.Users;
-using Abp.Configuration;
+using System.Threading.Tasks;
 
 
 namespace Radin.Authorization.Accounts

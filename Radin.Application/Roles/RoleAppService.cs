@@ -1,18 +1,20 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Abp.Application.Services;
+﻿using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 using Abp.Authorization;
 using Abp.Authorization.Users;
 using Abp.Domain.Repositories;
 using Abp.IdentityFramework;
+using Abp.Timing;
 using Abp.UI;
+using Microsoft.AspNet.Identity;
 using Radin.Authorization;
 using Radin.Authorization.Roles;
 using Radin.Authorization.Users;
 using Radin.Roles.Dto;
-using Microsoft.AspNet.Identity;
+using Radin.Test;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Radin.Roles
 {
@@ -24,16 +26,20 @@ namespace Radin.Roles
         private readonly IRepository<User, long> _userRepository;
         private readonly IRepository<UserRole, long> _userRoleRepository;
         private readonly IRepository<Role> _roleRepository;
+        public readonly IRepository<BaseData> _baseDataRepo;
 
         public RoleAppService(
             IRepository<Role> repository,
             RoleManager roleManager,
+             IRepository<BaseData> baseDataRepo,
             UserManager userManager,
             IRepository<User, long> userRepository,
             IRepository<UserRole, long> userRoleRepository,
             IRepository<Role> roleRepository)
             : base(repository)
         {
+            _baseDataRepo = baseDataRepo;
+
             _roleManager = roleManager;
             _userManager = userManager;
             _userRepository = userRepository;
@@ -43,6 +49,13 @@ namespace Radin.Roles
 
         public override async Task<RoleDto> CreateAsync(CreateRoleDto input)
         {
+
+            BaseData bd = new BaseData()
+            {
+                Name = Clock.Now.Ticks.ToString()
+            };
+            _baseDataRepo.Insert(bd);
+
             CheckCreatePermission();
 
             var role = ObjectMapper.Map<Role>(input);

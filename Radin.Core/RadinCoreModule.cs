@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using Abp;
+using Abp.Domain.Entities.Auditing;
 using Abp.Localization.Dictionaries;
 using Abp.Localization.Dictionaries.Xml;
 using Abp.Modules;
@@ -9,6 +10,7 @@ using Radin.Authorization.Roles;
 using Radin.Authorization.Users;
 using Radin.Configuration;
 using Radin.MultiTenancy;
+using System.Reflection;
 
 namespace Radin
 {
@@ -18,6 +20,16 @@ namespace Radin
         public override void PreInitialize()
         {
             Configuration.Auditing.IsEnabledForAnonymousUsers = true;
+
+            Configuration.EntityHistory.IsEnabled = true;
+
+            Configuration.EntityHistory.Selectors.Add(
+       new NamedTypeSelector(
+           "Abp.FullAuditedEntities",
+           type => typeof(IFullAudited).IsAssignableFrom(type)
+       )
+   );
+
 
             //Declare entity types
             Configuration.Modules.Zero().EntityTypes.Tenant = typeof(Tenant);
@@ -43,7 +55,7 @@ namespace Radin
             Configuration.Authorization.Providers.Add<RadinAuthorizationProvider>();
 
             Configuration.Settings.Providers.Add<AppSettingProvider>();
-            
+
             Configuration.Settings.SettingEncryptionConfiguration.DefaultPassPhrase = RadinConsts.DefaultPassPhrase;
         }
 

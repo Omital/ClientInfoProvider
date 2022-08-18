@@ -1,12 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
-using Abp.Application.Services;
+﻿using Abp.Application.Services;
 using Abp.IdentityFramework;
 using Abp.Runtime.Session;
+using Microsoft.AspNet.Identity;
 using Radin.Authorization.Users;
 using Radin.MultiTenancy;
-using Radin.Users;
-using Microsoft.AspNet.Identity;
+using System;
+using System.Threading.Tasks;
 
 namespace Radin
 {
