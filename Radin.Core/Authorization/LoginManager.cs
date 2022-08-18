@@ -1,5 +1,4 @@
-﻿using Abp.Auditing;
-using Abp.Authorization;
+﻿using Abp.Authorization;
 using Abp.Authorization.Users;
 using Abp.Configuration;
 using Abp.Configuration.Startup;
@@ -17,8 +16,6 @@ namespace Radin.Authorization
 {
     public class LogInManager : AbpLogInManager<Tenant, Role, User>
     {
-        public new IClientInfoProvider ClientInfoProvider { get; set; }
-
         public LogInManager(
             UserManager userManager,
             IMultiTenancyConfig multiTenancyConfig,
