@@ -2,9 +2,9 @@
 using Abp.Application.Services.Dto;
 using Abp.Authorization;
 using Abp.Authorization.Users;
+using Abp.BackgroundJobs;
 using Abp.Domain.Repositories;
 using Abp.IdentityFramework;
-using Abp.Timing;
 using Abp.UI;
 using Microsoft.AspNet.Identity;
 using Radin.Authorization;
@@ -27,9 +27,10 @@ namespace Radin.Roles
         private readonly IRepository<UserRole, long> _userRoleRepository;
         private readonly IRepository<Role> _roleRepository;
         public readonly IRepository<BaseData> _baseDataRepo;
-
+        private readonly IBackgroundJobManager _backgroundJobManager;
         public RoleAppService(
             IRepository<Role> repository,
+            IBackgroundJobManager backgroundJobManager,
             RoleManager roleManager,
              IRepository<BaseData> baseDataRepo,
             UserManager userManager,
@@ -38,6 +39,7 @@ namespace Radin.Roles
             IRepository<Role> roleRepository)
             : base(repository)
         {
+            _backgroundJobManager = backgroundJobManager;
             _baseDataRepo = baseDataRepo;
 
             _roleManager = roleManager;
@@ -50,11 +52,13 @@ namespace Radin.Roles
         public override async Task<RoleDto> CreateAsync(CreateRoleDto input)
         {
 
-            BaseData bd = new BaseData()
-            {
-                Name = Clock.Now.Ticks.ToString()
-            };
-            _baseDataRepo.Insert(bd);
+            await _backgroundJobManager.EnqueueAsync<SampleJob, SampleJobArgs>(new SampleJobArgs());
+
+            //BaseData bd = new BaseData()
+            //{
+            //    Name = Clock.Now.Ticks.ToString()
+            //};
+            //_baseDataRepo.Insert(bd);
 
             CheckCreatePermission();
 
